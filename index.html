@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechSecure AI | Next-Gen Security</title>
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="./src/style.css">
+    
+    <!-- LIBRERÍAS CDN (Para que los botones funcionen siempre) -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/speech@latest/dist/teachablemachine-speech.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- Landing Page -->
+        <main id="marketing-site">
+            <header id="main-header" class="glass-header">
+                <nav class="container">
+                    <a href="#" class="logo"><i class="fas fa-shield-halved"></i> TechSecure <span class="highlight">AI</span></a>
+                    <ul class="nav-links">
+                        <li><a href="#inicio">Inicio</a></li>
+                        <li><a href="#servicios">Servicios</a></li>
+                        <li><a href="#como-funciona">Protocolo</a></li>
+                        <li><a href="#contacto">Contacto</a></li>
+                    </ul>
+                    <button id="btn-login-trigger" class="btn btn-primary btn-glow">Acceso Inteligente</button>
+                </nav>
+            </header>
+
+            <section id="inicio" class="hero-section">
+                <div class="bg-blob blob-1"></div>
+                <div class="bg-blob blob-2"></div>
+                <div class="container hero-content">
+                    <div class="hero-text">
+                        <div class="badge-animated">IA SECURE V.2.1</div>
+                        <h1>Seguridad del <span class="text-gradient">Futuro</span> Hoy.</h1>
+                        <p class="subtitle">Autenticación biométrica de clase mundial con redes neuronales y IA conversacional Vapi.</p>
+                        <div class="hero-btns">
+                            <button id="btn-hero-cta" class="btn btn-large btn-primary">Empezar ahora <i class="fas fa-bolt"></i></button>
+                            <button class="btn btn-large btn-secondary">Ver Tecnología</button>
+                        </div>
+                    </div>
+                    <div class="hero-visual">
+                        <div class="glass-card-perspective">
+                            <div class="scan-line-v"></div>
+                            <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=800" alt="Cyber">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Expansión de Servicios -->
+            <section id="servicios" class="services-section">
+                <div class="container">
+                    <h2 class="section-title-large">Protección Total</h2>
+                    <div class="services-grid-large">
+                        <div class="service-item glass">
+                            <i class="fas fa-microphone-lines s-icon"></i>
+                            <h3>Audio Bio</h3>
+                            <p>Análisis vocal único para cada usuario.</p>
+                        </div>
+                        <div class="service-item glass">
+                            <i class="fas fa-face-viewfinder s-icon"></i>
+                            <h3>Face ID AI</h3>
+                            <p>Validación facial de milisegundos.</p>
+                        </div>
+                        <div class="service-item glass">
+                            <i class="fas fa-robot s-icon"></i>
+                            <h3>Vapi Assistant</h3>
+                            <p>Guía interactiva por voz.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Auth Modal -->
+        <div id="auth-modal" class="modal-overlay hidden">
+            <div class="modal-content glass-dark">
+                <button class="modal-close">&times;</button>
+                <div id="auth-flow-container">
+                    <div id="card-voice-selector" class="auth-card active">
+                        <div class="camera-ui glass"><video id="webcam-selector" autoplay playsinline muted></video></div>
+                        <div class="voice-feedback">
+                            <h3>Identidad Biométrica</h3>
+                            <p id="detected-command" class="highlight">Escuchando comando...</p>
+                            <p class="small">Di 'registrar' o 'ingresar'</p>
+                        </div>
+                    </div>
+                    <!-- Cards Ocultas -->
+                    <div id="card-registro-datos" class="auth-card hidden">
+                        <h3>Registro Seguro</h3>
+                        <form id="form-registro">
+                            <input type="text" id="reg-nombre" placeholder="Nombre completo" required>
+                            <input type="email" id="reg-email" placeholder="Correo" required>
+                            <input type="text" id="reg-usuario" placeholder="Username" required>
+                            <input type="password" id="reg-clave" placeholder="Password" required>
+                            <button type="submit" class="btn btn-primary btn-block">Siguiente</button>
+                        </form>
+                    </div>
+                    <div id="card-registro-rostro" class="auth-card hidden">
+                        <h3>Perfil Facial</h3>
+                        <div class="camera-ui glass"><video id="webcam-reg" autoplay playsinline muted></video></div>
+                        <button id="btn-capture-photo" class="btn btn-primary btn-block">Capturar Rostro</button>
+                        <canvas id="photo-canvas" style="display:none;"></canvas>
+                    </div>
+                    <div id="card-login-datos" class="auth-card hidden">
+                        <h3>Login</h3>
+                        <form id="form-login">
+                            <input type="text" id="login-user" placeholder="Usuario" required>
+                            <input type="password" id="login-key" placeholder="Contraseña" required>
+                            <button type="submit" class="btn btn-primary btn-block">Validar</button>
+                        </form>
+                    </div>
+                    <div id="card-login-rostro" class="auth-card hidden">
+                        <h3>Escaneo Facial</h3>
+                        <div class="camera-ui glass"><video id="webcam-login" autoplay playsinline muted></video></div>
+                        <p id="login-face-status">Analizando...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard -->
+        <div id="dashboard" class="hidden dashboard-view">
+            <aside class="sidebar glass-dark">
+                <div class="sidebar-logo">TechSecure AI</div>
+                <nav class="sidebar-nav">
+                    <button class="nav-item active" data-module="inicio">Inicio</button>
+                    <button class="nav-item" data-module="usuarios">Usuarios</button>
+                    <button class="nav-item" data-module="seguridad">Seguridad</button>
+                </nav>
+                <div class="sidebar-footer"><button id="btn-logout" class="btn-logout">Cerrar Sesión</button></div>
+            </aside>
+            <main class="dashboard-content">
+                <header class="dashboard-header glass">
+                    <h2>Bienvenido, <span id="display-user-name">...</span></h2>
+                    <div class="user-avatar" id="display-user-avatar"></div>
+                </header>
+                <div id="modules-container">
+                    <section id="module-inicio" class="dashboard-module active">
+                        <div class="welcome-banner-saas glass"><h1>Admin Dashboard</h1><p>Sistema Online.</p></div>
+                        <div class="q-card glass"><h3>Cloud Users</h3><div id="stat-total-users" class="value">0</div></div>
+                    </section>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Vapi Force Load -->
+    <script>
+      (function (d, t) {
+        var g = d.createElement(t), s = d.getElementsByTagName(t)[0];
+        g.src = "https://cdn.jsdelivr.net/gh/VapiAI/html-script-tag@latest/dist/vapi-public.js";
+        g.defer = true; g.async = true;
+        s.parentNode.insertBefore(g, s);
+        g.onload = function() {
+            if (window.vapiSDK) {
+                window.vapiInstance = window.vapiSDK.run({
+                    apiKey: "fb054f9a-c453-488f-a9cb-f4f71a7a030d",
+                    assistantId: "180c89aa-f3d8-45b3-8984-1448ac96d36a"
+                });
+            }
+        };
+      })(document, "script");
+    </script>
+    <script type="module" src="./src/main.js"></script>
+</body>
+</html>
