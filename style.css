@@ -1,0 +1,94 @@
+:root {
+    --primary: hsl(200, 100%, 50%);
+    --primary-glow: hsla(200, 100%, 50%, 0.4);
+    --bg-dark: #000000;
+    --text-primary: #ffffff;
+    --text-secondary: #86868b;
+    --glass-blur: 20px;
+    --glass-border: 1px solid hsla(0,0%,100%,0.1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: var(--bg-dark); color: var(--text-primary); font-family: 'Inter', sans-serif; overflow-x: hidden; scroll-behavior: smooth; }
+
+h1, h2, h3, .logo { font-family: 'Outfit', sans-serif; font-weight: 700; }
+
+.container { max-width: 1200px; margin: 0 auto; padding: 0 50px; }
+
+/* Background Blobs (Premium Look) */
+.bg-blob { position: fixed; width: 800px; height: 800px; background: radial-gradient(circle, hsla(210, 100%, 50%, 0.15) 0%, transparent 70%); border-radius: 50%; filter: blur(100px); z-index: -1; pointer-events: none; }
+.blob-1 { top: -300px; left: -300px; }
+.blob-2 { bottom: -300px; right: -300px; background: radial-gradient(circle, hsla(280, 100%, 60%, 0.1) 0%, transparent 70%); }
+
+/* Header Glass */
+.glass-header { position: fixed; top: 0; width: 100%; height: 80px; background: hsla(0,0%,0%,0.6); backdrop-filter: blur(20px); border-bottom: var(--glass-border); z-index: 1000; display: flex; align-items: center; }
+.glass-header nav { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+.logo { font-size: 1.5rem; text-decoration: none; color: white; display: flex; align-items: center; gap: 10px; }
+.logo i { color: var(--primary); }
+.highlight { color: var(--primary); }
+.nav-links { display: flex; list-style: none; gap: 35px; }
+.nav-links a { text-decoration: none; color: var(--text-secondary); font-size: 0.95rem; transition: 0.3s; }
+.nav-links a:hover { color: white; }
+
+/* Hero */
+.hero-section { min-height: 100vh; display: flex; align-items: center; padding-top: 100px; }
+.hero-content { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 80px; align-items: center; }
+.badge-animated { background: hsla(0,0%,100%,0.05); border: var(--glass-border); padding: 8px 20px; border-radius: 100px; display: inline-block; font-size: 0.8rem; letter-spacing: 2px; color: var(--primary); margin-bottom: 30px; animation: glow-pulse 3s infinite; }
+@keyframes glow-pulse { 0%, 100% { box-shadow: 0 0 10px hsla(210,100%,50%,0.1); } 50% { box-shadow: 0 0 30px hsla(210,100%,50%,0.3); } }
+
+h1 { font-size: 5rem; line-height: 1.05; letter-spacing: -3px; margin-bottom: 25px; }
+.text-gradient { background: linear-gradient(135deg, var(--primary), #a2d2ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.subtitle { font-size: 1.4rem; color: var(--text-secondary); margin-bottom: 50px; max-width: 550px; }
+.hero-btns { display: flex; gap: 20px; }
+.hero-visual img { width: 100%; border-radius: 40px; transform: perspective(1000px) rotateY(-10deg); box-shadow: -20px 20px 60px rgba(0,0,0,0.5); border: var(--glass-border); }
+
+/* Buttons Premium */
+.btn { padding: 14px 28px; border-radius: 100px; font-weight: 600; cursor: pointer; transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1); border: none; display: flex; align-items: center; gap: 12px; }
+.btn-primary { background: var(--primary); color: white; }
+.btn-primary:active { transform: scale(0.95); }
+.btn-secondary { background: hsla(0,0%,100%,0.05); color: white; border: var(--glass-border); }
+.btn-secondary:hover { background: hsla(0,0%,100%,0.1); }
+.btn-large { padding: 18px 40px; font-size: 1.1rem; }
+
+/* Sections */
+section { padding: 140px 0; }
+.section-title-large { font-size: 3.5rem; text-align: center; margin-bottom: 80px; letter-spacing: -2px; }
+
+/* Services */
+.services-grid-large { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; }
+.glass { background: hsla(0,0%,100%,0.03); backdrop-filter: blur(25px); border: var(--glass-border); border-radius: 30px; padding: 40px; transition: 0.4s; }
+.glass:hover { background: hsla(0,0%,100%,0.06); transform: translateY(-10px); color: var(--primary); }
+.s-icon { font-size: 2.5rem; margin-bottom: 25px; }
+
+/* How it works Steps */
+.steps-container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; margin-top: 60px; }
+.step-card { text-align: center; position: relative; }
+.step-num { width: 60px; height: 60px; background: var(--primary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 800; margin: 0 auto 25px; }
+.step-card h4 { font-size: 1.5rem; margin-bottom: 15px; }
+
+/* Tech Deep Dive */
+.grid-2-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 100px; align-items: center; }
+.ai-orb { width: 300px; height: 300px; background: radial-gradient(circle, var(--primary) 0%, transparent 70%); border-radius: 50%; filter: blur(40px); animation: orb-pulse 4s infinite alternate; }
+@keyframes orb-pulse { from { opacity: 0.5; transform: scale(0.9); } to { opacity: 0.8; transform: scale(1.1); } }
+
+/* Contact Form */
+.contact-grid { display: grid; grid-template-columns: 1fr 1.5fr; border-radius: 40px; overflow: hidden; }
+.contact-info { padding: 60px; background: hsla(200, 100%, 50%, 0.1); }
+.c-form { padding: 60px; }
+input, textarea { width: 100%; padding: 18px; background: #1a1a1a; border: var(--glass-border); border-radius: 12px; color: white; margin-bottom: 20px; font-size: 1rem; outline: none; transition: 0.3s; }
+input:focus { border-color: var(--primary); }
+
+/* Auth Modals (Vistas SaaS) */
+.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 2000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: 0.5s; backdrop-filter: blur(15px); }
+.modal-overlay.active { opacity: 1; pointer-events: all; }
+.modal-content { max-width: 550px; width: 95%; position: relative; transform: translateY(20px); transition: 0.5s; }
+.modal-overlay.active .modal-content { transform: translateY(0); }
+.modal-close { position: absolute; right: 30px; top: 30px; font-size: 2.5rem; background: none; border: none; color: white; cursor: pointer; }
+
+/* Dashboard Premium Sidebar */
+.dashboard-view { display: flex; height: 100vh; background: #000; }
+.sidebar { width: 280px; background: #080808; border-right: var(--glass-border); padding: 50px 25px; display: flex; flex-direction: column; }
+.nav-item { background: none; border: none; color: var(--text-secondary); padding: 15px 20px; border-radius: 15px; text-align: left; cursor: pointer; margin-bottom: 10px; font-size: 1.05rem; }
+.nav-item.active { background: hsla(200,100%,50%,0.1); color: var(--primary); font-weight: 600; }
+
+.hidden { display: none !important; }
